@@ -19,18 +19,28 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+require __DIR__ . '/auth.php';
+
 Route::get('/dashboard', function () {
     return view('index');
 })->middleware(['auth', 'verified'])->name('dashboard');
-
+// After Logout show a Logout Page  with notifications;
+Route::get('logout/page', [AdminController::class, 'logoutPage'])->name('admin.logout-page');
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::controller(ProfileController::class)->group(function () {
+            Route::get('/profile', 'edit')->name('profile.edit');
+            Route::patch('/profile', 'update')->name('profile.update');
+            Route::delete('/profile', 'destroy')->name('profile.destroy');
+        });
 
-require __DIR__ . '/auth.php';
-// Logout Controller
-Route::get('admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
-// LOgOut Page
-Route::get('admin/logout/page', [AdminController::class, 'logoutPage'])->name('admin.logout-page');
+        // Admin Profile Routes
+        Route::controller(AdminController::class)->group(function () {
+            Route::get('logout', 'logout')->name('logout');
+            Route::get('profile', 'adminProfile')->name('profile');
+            Route::post('profile/store', 'storeAdminProfile')->name('profile-store');
+            Route::get('password-change', 'passwordChange')->name('password-change');
+            Route::post('password-update', 'passwordUpdate')->name('update.profile');
+        });
+    });
+});
