@@ -18,10 +18,7 @@
                     </a>
                 </li>
 
-
                 <li class="menu-title mt-2">Apps</li>
-
-
 
                 <li>
                     <a href="#sidebarEcommerce" data-bs-toggle="collapse">
@@ -32,10 +29,27 @@
                     <div class="collapse" id="sidebarEcommerce">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="ecommerce-dashboard.html">All Employee</a>
+                                <a href="{{ route('admin.employees.index') }}">All Employee</a>
                             </li>
                             <li>
-                                <a href="ecommerce-products.html">Add Employee</a>
+                                <a href="{{ route('admin.employees.create') }}">Add Employee</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <a href="#sidebarEcommerce" data-bs-toggle="collapse">
+                        <i class="mdi mdi-cart-outline"></i>
+                        <span>Coustomer Manage</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="sidebarEcommerce">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('admin.coustomer.index') }}">All Coustomer</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.coustomer.create') }}">Add Coustomer</a>
                             </li>
                         </ul>
                     </div>

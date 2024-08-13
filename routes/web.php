@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Backend\CoustomerController;
+use App\Http\Controllers\Backend\EmployeeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -42,5 +44,18 @@ Route::middleware('auth')->group(function () {
             Route::get('password-change', 'passwordChange')->name('password-change');
             Route::post('password-update', 'passwordUpdate')->name('update.profile');
         });
+
+        // Employee Routes
+        Route::controller(EmployeeController::class)->group(function () {
+            Route::get('employee-list', 'index')->name('employees.index');
+            Route::get('employee-list/create', 'create')->name('employees.create');
+            Route::post('employee-list/store', 'store')->name('employees.store');
+            Route::get('employee-list/{id}/edit', 'edit')->name('employees.edit');
+            Route::put('employee-list/{id}', 'update')->name('employees.update');
+            Route::delete('employee-list/{id}', 'destroy')->name('employees.destroy');
+        });
+
+        // Coustomer Route
+        Route::resource('coustomer', CoustomerController::class);
     });
 });
