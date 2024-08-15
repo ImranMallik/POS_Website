@@ -1,8 +1,11 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Backend\AdvanceSalaryController;
 use App\Http\Controllers\Backend\CoustomerController;
 use App\Http\Controllers\Backend\EmployeeController;
+use App\Http\Controllers\Backend\PaySalaryController;
+use App\Http\Controllers\Backend\SupplierController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -57,5 +60,13 @@ Route::middleware('auth')->group(function () {
 
         // Coustomer Route
         Route::resource('coustomer', CoustomerController::class);
+        // Supplier Route
+        Route::get('supplier-details/{id}', [SupplierController::class, 'get_supplier_details'])->name('supplier-details');
+        Route::resource('supplier', SupplierController::class);
+        // Advance Salary
+        Route::resource('advance-salary', AdvanceSalaryController::class);
+        // Pay Salary
+        Route::post('pay-now', [PaySalaryController::class, 'payNow'])->name('advance-salary.pay');
+        Route::resource('pay-salary', PaySalaryController::class);
     });
 });

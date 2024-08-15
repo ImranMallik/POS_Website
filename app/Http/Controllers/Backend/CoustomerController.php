@@ -58,8 +58,8 @@ class CoustomerController extends Controller
         $coustomerData->bank_branch = $request->bank_branch;
         $coustomerData->city = $request->city;
         $coustomerData->save();
-        toastr('Customer Created Successfully!', 'success');
-        return redirect()->route('admin.coustomer.index');
+        // toastr('Customer Created Successfully!', 'success');
+        return redirect()->route('admin.coustomer.index')->with('success', 'Customer Created Successfully!');
     }
 
     /**

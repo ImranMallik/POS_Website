@@ -32,6 +32,7 @@
     <script src="{{ asset('backend/assets/js/head.js') }}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
+
 </head>
 
 <!-- body start -->

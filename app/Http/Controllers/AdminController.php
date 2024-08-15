@@ -20,8 +20,8 @@ class AdminController extends Controller
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
-        toastr('Logged out successfully', 'warning');
-        return redirect()->route('admin.logout-page');
+        // toastr('Logged out successfully', 'warning');
+        return redirect()->route('admin.logout-page')->with('success', 'Logged out successfully');
     }
     // After logout Return this page
     public function logoutPage()

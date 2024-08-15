@@ -50,8 +50,8 @@ class EmployeeController extends Controller
         $employeeData->vacation = $request->vacation;
         $employeeData->city = $request->city;
         $employeeData->save();
-        toastr('Employee Added Successfully!', 'success');
-        return redirect()->route('admin.employees.index');
+        // toastr('Employee Added Successfully!', 'success');
+        return redirect()->route('admin.employees.index')->with('success', 'Employee Added Successfully!');
     }
 
     public function edit($id)
@@ -75,7 +75,7 @@ class EmployeeController extends Controller
             'image' => 'nullable|image|max:2048'
         ]);
         $employeeData = Employee::find($id);
-        $imagePath = $this->updateImage($request, 'image', 'uploads', $employeeData->image);
+        $imagePath = $this->updateImage($request, 'image', 'upload', $employeeData->image);
         $employeeData->image = empty(!$imagePath) ? $imagePath : $employeeData->image;
         // $employeeData->image = $imagePath;
         $employeeData->name = $request->name;
@@ -87,8 +87,8 @@ class EmployeeController extends Controller
         $employeeData->vacation = $request->vacation;
         $employeeData->city = $request->city;
         $employeeData->save();
-        toastr('Employee Updated Successfully!', 'success');
-        return redirect()->route('admin.employees.index');
+        // toastr('Employee Updated Successfully!', 'success');
+        return redirect()->route('admin.employees.index')->with('success', 'Employee Updated Successfully!');
     }
 
     public function destroy($id)

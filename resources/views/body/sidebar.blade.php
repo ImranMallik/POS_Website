@@ -21,39 +21,100 @@
                 <li class="menu-title mt-2">Apps</li>
 
                 <li>
-                    <a href="#sidebarEcommerce" data-bs-toggle="collapse">
-                        <i class="mdi mdi-cart-outline"></i>
+                    <a href="#employee" data-bs-toggle="collapse">
+                        <i class="mdi mdi-account-tie-outline"></i>
                         <span>Employee Manage</span>
                         <span class="menu-arrow"></span>
                     </a>
-                    <div class="collapse" id="sidebarEcommerce">
+                    <div class="collapse" id="employee">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="{{ route('admin.employees.index') }}">All Employee</a>
+                                <a href="{{ route('admin.employees.index') }}">
+                                    <i class="mdi mdi-account-multiple-outline"></i> All Employee
+                                </a>
                             </li>
                             <li>
-                                <a href="{{ route('admin.employees.create') }}">Add Employee</a>
+                                <a href="{{ route('admin.employees.create') }}">
+                                    <i class="mdi mdi-account-plus-outline"></i> Add Employee
+                                </a>
                             </li>
                         </ul>
                     </div>
                 </li>
+
                 <li>
-                    <a href="#sidebarEcommerce" data-bs-toggle="collapse">
-                        <i class="mdi mdi-cart-outline"></i>
-                        <span>Coustomer Manage</span>
+                    <a href="#coustomer" data-bs-toggle="collapse">
+                        <i class="mdi mdi-account-cog-outline"></i>
+                        <span>Customer Manage</span>
                         <span class="menu-arrow"></span>
                     </a>
-                    <div class="collapse" id="sidebarEcommerce">
+                    <div class="collapse" id="coustomer">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="{{ route('admin.coustomer.index') }}">All Coustomer</a>
+                                <a href="{{ route('admin.coustomer.index') }}">
+                                    <i class="mdi mdi-account-multiple-outline"></i> All Customer
+                                </a>
                             </li>
                             <li>
-                                <a href="{{ route('admin.coustomer.create') }}">Add Coustomer</a>
+                                <a href="{{ route('admin.coustomer.create') }}">
+                                    <i class="mdi mdi-account-plus-outline"></i> Add Customer
+                                </a>
                             </li>
                         </ul>
                     </div>
                 </li>
+
+                <li>
+                    <a href="#supplier" data-bs-toggle="collapse">
+                        <i class="mdi mdi-truck-outline"></i>
+                        <span>Supplier Manage</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="supplier">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('admin.supplier.index') }}">
+                                    <i class="mdi mdi-account-multiple-outline"></i> All Supplier
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.supplier.create') }}">
+                                    <i class="mdi mdi-account-plus-outline"></i> Add Supplier
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li>
+                    <a href="#advancesalary" data-bs-toggle="collapse">
+                        <i class="mdi mdi-cash-multiple"></i>
+                        <span>Employee Salary</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="advancesalary">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('admin.advance-salary.index') }}">
+                                    <i class="mdi mdi-file-document-outline"></i> All Advance Salary
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.pay-salary.index') }}">
+                                    <i class="mdi mdi-cash"></i> Pay Salary
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="{{ route('admin.advance-salary.create') }}">
+                                    <i class="mdi mdi-cash-plus"></i> Add Advance Salary
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+
 
                 <li>
                     <a href="#sidebarCrm" data-bs-toggle="collapse">
