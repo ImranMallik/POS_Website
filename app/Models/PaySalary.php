@@ -9,4 +9,9 @@ class PaySalary extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+    public function employeeDetails()
+    {
+        return $this->belongsTo(Employee::class, 'employee_id');
+    }
 }

@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Backend\AdvanceSalaryController;
 use App\Http\Controllers\Backend\CoustomerController;
 use App\Http\Controllers\Backend\EmployeeController;
+use App\Http\Controllers\Backend\LastMonthSalaryController;
 use App\Http\Controllers\Backend\PaySalaryController;
 use App\Http\Controllers\Backend\SupplierController;
 use App\Http\Controllers\ProfileController;
@@ -68,5 +69,6 @@ Route::middleware('auth')->group(function () {
         // Pay Salary
         Route::post('pay-now', [PaySalaryController::class, 'payNow'])->name('advance-salary.pay');
         Route::resource('pay-salary', PaySalaryController::class);
+        Route::get('last-month-pay', [LastMonthSalaryController::class, 'get_last_month_pay'])->name('last-month-pay');
     });
 });

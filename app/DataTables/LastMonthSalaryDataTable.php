@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\LastMonthSalary;
+use App\Models\PaySalary;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -22,16 +23,27 @@ class LastMonthSalaryDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'lastmonthsalary.action')
+            ->addColumn('image', function ($query) {
+                return $img = "<img width = '50px' src='" . asset($query->employeeDetails->image) . "'></img>";
+            })
+            ->addColumn('name', function ($query) {
+                return $query->employeeDetails->name;
+            })
+            ->addColumn('salary', function ($query) {
+                return '₹ ' . number_format($query->employeeDetails->salary, 2);
+            })
+
+            ->rawColumns(['image', 'name', 'salary',])
             ->setRowId('id');
     }
 
     /**
      * Get the query source of dataTable.
      */
-    public function query(LastMonthSalary $model): QueryBuilder
+    public function query(PaySalary $model): QueryBuilder
     {
-        return $model->newQuery();
+        $lastMonth = now()->subMonth()->format('F'); // Get the previous month's name
+        return $model->newQuery()->where('salary_month', $lastMonth);
     }
 
     /**
@@ -40,20 +52,20 @@ class LastMonthSalaryDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('lastmonthsalary-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    //->dom('Bfrtip')
-                    ->orderBy(1)
-                    ->selectStyleSingle()
-                    ->buttons([
-                        Button::make('excel'),
-                        Button::make('csv'),
-                        Button::make('pdf'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
-                    ]);
+            ->setTableId('paysalary-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            //->dom('Bfrtip')
+            ->orderBy(1)
+            ->selectStyleSingle()
+            ->buttons([
+                Button::make('excel'),
+                Button::make('csv'),
+                Button::make('pdf'),
+                Button::make('print'),
+                Button::make('reset'),
+                Button::make('reload')
+            ]);
     }
 
     /**
@@ -62,15 +74,13 @@ class LastMonthSalaryDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
+
             Column::make('id'),
-            Column::make('add your columns'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
+            Column::make('name'),
+            Column::make('image'),
+            Column::make('salary_month'),
+            Column::make('salary'),
+
         ];
     }
 

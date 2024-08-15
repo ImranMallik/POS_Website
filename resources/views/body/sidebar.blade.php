@@ -110,6 +110,13 @@
                                     <i class="mdi mdi-cash-plus"></i> Add Advance Salary
                                 </a>
                             </li>
+                            <li>
+                                <a href="{{ route('admin.last-month-pay') }}">
+                                    <i class="mdi mdi-calendar"></i> Last Month Salary
+                                </a>
+                            </li>
+
+
                         </ul>
                     </div>
                 </li>
