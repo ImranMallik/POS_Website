@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Backend\AdvanceSalaryController;
 use App\Http\Controllers\Backend\CoustomerController;
+use App\Http\Controllers\Backend\EmployeeAttendanceController;
 use App\Http\Controllers\Backend\EmployeeController;
 use App\Http\Controllers\Backend\LastMonthSalaryController;
 use App\Http\Controllers\Backend\PaySalaryController;
@@ -70,5 +71,10 @@ Route::middleware('auth')->group(function () {
         Route::post('pay-now', [PaySalaryController::class, 'payNow'])->name('advance-salary.pay');
         Route::resource('pay-salary', PaySalaryController::class);
         Route::get('last-month-pay', [LastMonthSalaryController::class, 'get_last_month_pay'])->name('last-month-pay');
+
+        // Employee Attendance
+        Route::post('/attendance/submit', [EmployeeAttendanceController::class, 'attendancesubmit'])->name('attendance.submit');
+        Route::get('employee-attendance-list', [EmployeeAttendanceController::class, 'listAllAttendance'])->name('employee-attendance-list');
+        Route::resource('employee-attendance', EmployeeAttendanceController::class);
     });
 });

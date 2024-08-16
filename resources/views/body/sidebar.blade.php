@@ -120,6 +120,30 @@
                         </ul>
                     </div>
                 </li>
+                <li>
+                    <a href="#employeeattendance" data-bs-toggle="collapse">
+                        <i class="mdi mdi-calendar-check"></i>
+                        <span>Employee Attendance</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="employeeattendance">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('admin.employee-attendance.index') }}">
+                                    <i class="mdi mdi-view-list"></i>
+                                    Add Attendance
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.employee-attendance-list') }}">
+                                    <i class="mdi mdi-calendar-plus"></i>
+                                    All Attendance
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
 
 
 
