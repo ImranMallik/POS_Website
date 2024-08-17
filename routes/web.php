@@ -2,11 +2,13 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Backend\AdvanceSalaryController;
+use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\CoustomerController;
 use App\Http\Controllers\Backend\EmployeeAttendanceController;
 use App\Http\Controllers\Backend\EmployeeController;
 use App\Http\Controllers\Backend\LastMonthSalaryController;
 use App\Http\Controllers\Backend\PaySalaryController;
+use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\SupplierController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -76,5 +78,17 @@ Route::middleware('auth')->group(function () {
         Route::post('/attendance/submit', [EmployeeAttendanceController::class, 'attendancesubmit'])->name('attendance.submit');
         Route::get('employee-attendance-list', [EmployeeAttendanceController::class, 'listAllAttendance'])->name('employee-attendance-list');
         Route::resource('employee-attendance', EmployeeAttendanceController::class);
+
+        // Category
+        Route::resource('category', CategoryController::class);
+
+        // Product
+        Route::get('product-bar-code/{id}', [ProductController::class, 'productBarCode'])->name('product-bar-code');
+        Route::get('product-imported', [ProductController::class, 'productimported'])->name('product-imported');
+        // Product Export--------
+        Route::get('product-export', [ProductController::class, 'productExport'])->name('product-export');
+        // Product import Data--------
+        Route::post('product-import-data', [ProductController::class, 'productImportData'])->name('product-import-data');
+        Route::resource('product', ProductController::class);
     });
 });

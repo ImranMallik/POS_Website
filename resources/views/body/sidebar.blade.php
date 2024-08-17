@@ -143,6 +143,55 @@
                         </ul>
                     </div>
                 </li>
+                <li>
+                    <a href="#category" data-bs-toggle="collapse">
+                        <i class="mdi mdi-tag-multiple"></i>
+                        <span>Category</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="category">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('admin.category.index') }}">
+                                    <i class="mdi mdi-format-list-bulleted"></i>
+                                    All Category
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <a href="#productMenu" data-bs-toggle="collapse">
+                        <i class="mdi mdi-tag-multiple"></i> <!-- Icon for Product -->
+                        <span>Product</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="productMenu">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('admin.product.index') }}">
+                                    <i class="mdi mdi-format-list-bulleted"></i> <!-- Icon for All Product -->
+                                    All Product
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.product.create') }}">
+                                    <i class="mdi mdi-plus-box"></i> <!-- Icon for Add Product -->
+                                    Add Product
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.product-imported') }}">
+                                    <i class="mdi mdi-database-import"></i>
+                                    Import Product
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </li>
+
+
 
 
 
