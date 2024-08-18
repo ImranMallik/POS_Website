@@ -239,30 +239,44 @@
                     </div>
                 </li>
 
-
-
                 <li class="menu-title mt-2">Custom</li>
 
                 <li>
                     <a href="#sidebarAuth" data-bs-toggle="collapse">
                         <i class="mdi mdi-account-circle-outline"></i>
-                        <span> Auth Pages </span>
+                        <span>Expense </span>
                         <span class="menu-arrow"></span>
                     </a>
                     <div class="collapse" id="sidebarAuth">
                         <ul class="nav-second-level">
                             <li>
-                                <a href="auth-login.html">Log In</a>
+                                <a href="{{ route('admin.expense.create') }}">
+                                    <i class="fas fa-plus-circle"></i>
+                                    Add Expense
+                                </a>
                             </li>
                             <li>
-                                <a href="auth-login-2.html">Log In 2</a>
+                                <a href="{{ route('admin.expense.index') }}">
+                                    <i class="fas fa-calendar-day"></i>
+                                    Today Expense
+                                </a>
                             </li>
                             <li>
-                                <a href="auth-register.html">Register</a>
+                                <a href="{{ route('admin.month-expense') }}">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    Monthly Expense
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.year-expense') }}">
+                                    <i class="fas fa-calendar"></i>
+                                    Yearly Expense
+                                </a>
                             </li>
                         </ul>
                     </div>
                 </li>
+
 
                 <li>
                     <a href="#sidebarExpages" data-bs-toggle="collapse">

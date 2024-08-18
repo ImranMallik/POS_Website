@@ -2,7 +2,6 @@
 
 @section('admin')
     <div class="content">
-
         <!-- Start Content-->
         <div class="container-fluid">
 

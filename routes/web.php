@@ -6,10 +6,13 @@ use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\CoustomerController;
 use App\Http\Controllers\Backend\EmployeeAttendanceController;
 use App\Http\Controllers\Backend\EmployeeController;
+use App\Http\Controllers\Backend\ExpenseController;
 use App\Http\Controllers\Backend\LastMonthSalaryController;
+use App\Http\Controllers\Backend\MonthExpenseController;
 use App\Http\Controllers\Backend\PaySalaryController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\SupplierController;
+use App\Http\Controllers\Backend\YearExpenseController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -79,10 +82,10 @@ Route::middleware('auth')->group(function () {
         Route::get('employee-attendance-list', [EmployeeAttendanceController::class, 'listAllAttendance'])->name('employee-attendance-list');
         Route::resource('employee-attendance', EmployeeAttendanceController::class);
 
-        // Category
+        // Category-------
         Route::resource('category', CategoryController::class);
 
-        // Product
+        // Product-----
         Route::get('product-bar-code/{id}', [ProductController::class, 'productBarCode'])->name('product-bar-code');
         Route::get('product-imported', [ProductController::class, 'productimported'])->name('product-imported');
         // Product Export--------
@@ -90,5 +93,10 @@ Route::middleware('auth')->group(function () {
         // Product import Data--------
         Route::post('product-import-data', [ProductController::class, 'productImportData'])->name('product-import-data');
         Route::resource('product', ProductController::class);
+        // Month Expense Data--------
+        Route::get('month-expense', [MonthExpenseController::class, 'monthExpense'])->name('month-expense');
+        Route::get('year-expense', [YearExpenseController::class, 'yearExpense'])->name('year-expense');
+        // Expense Data--------
+        Route::resource('expense', ExpenseController::class);
     });
 });
