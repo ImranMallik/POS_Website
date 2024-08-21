@@ -2,7 +2,8 @@
 
 namespace App\DataTables;
 
-use App\Models\Category;
+use App\Models\Po;
+use App\Models\Product;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -12,7 +13,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class CategoryDataTable extends DataTable
+class PosDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -22,20 +23,31 @@ class CategoryDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', function ($query) {
-                $editBtn = "<a href='" . route('admin.category.edit', $query->id) . "' class='btn btn-primary mx-2'><i class='far fa-edit'></i></a>";
-                $deleteBtn = "<a href='" . route('admin.category.destroy', $query->id) . "' class='btn btn-danger ml-2 delet-item'><i class='fas fa-trash-alt'></i></a>";
+            ->addColumn('add', function ($query) {
 
-                return $editBtn . $deleteBtn;
+                $addBtn = "<button type='button' class='btn add-to-cart-btn' style='font-size: 20px; color: #fff; background-color: #007bff; border-radius: 5px; padding: 8px 12px; border: none;'
+                data-id='{$query->id}' 
+                data-name='{$query->product_name}' 
+                data-price='{$query->selling_price}'>
+                <i class='fas fa-plus-square'></i>
+                </button>";
+                return $addBtn;
             })
-            ->rawColumns(['action'])
+
+
+
+            ->addColumn('image', function ($query) {
+                return $img = "<img width = '50px' src='" . asset($query->product_image) . "'></img>";
+            })
+
+            ->rawColumns(['add', 'image',])
             ->setRowId('id');
     }
 
     /**
      * Get the query source of dataTable.
      */
-    public function query(Category $model): QueryBuilder
+    public function query(Product $model): QueryBuilder
     {
         return $model->newQuery();
     }
@@ -46,11 +58,11 @@ class CategoryDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-            ->setTableId('category-table')
+            ->setTableId('product-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             //->dom('Bfrtip')
-            ->orderBy(0)
+            ->orderBy(1)
             ->selectStyleSingle()
             ->buttons([
                 Button::make('excel'),
@@ -70,12 +82,12 @@ class CategoryDataTable extends DataTable
         return [
 
             Column::make('id'),
-            Column::make('category_name'),
-
-            Column::computed('action')
+            Column::make('image'),
+            Column::make('product_name'),
+            Column::computed('add')
                 ->exportable(false)
                 ->printable(false)
-                ->width(200)
+                ->width(60)
                 ->addClass('text-center'),
         ];
     }
@@ -85,6 +97,6 @@ class CategoryDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Category_' . date('YmdHis');
+        return 'Pos_' . date('YmdHis');
     }
 }

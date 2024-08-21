@@ -17,6 +17,13 @@
                         <span> Dashboards </span>
                     </a>
                 </li>
+                <li>
+                    <a href="{{ route('admin.pos.index') }}">
+                        <i class="mdi mdi-cash-register"></i>
+                        <span> POS </span>
+                    </a>
+                </li>
+
 
                 <li class="menu-title mt-2">Apps</li>
 

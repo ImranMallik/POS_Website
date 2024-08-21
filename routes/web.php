@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Backend\AddToCartController;
 use App\Http\Controllers\Backend\AdvanceSalaryController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\CoustomerController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\Backend\ExpenseController;
 use App\Http\Controllers\Backend\LastMonthSalaryController;
 use App\Http\Controllers\Backend\MonthExpenseController;
 use App\Http\Controllers\Backend\PaySalaryController;
+use App\Http\Controllers\Backend\PosController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\SupplierController;
 use App\Http\Controllers\Backend\YearExpenseController;
@@ -98,5 +100,12 @@ Route::middleware('auth')->group(function () {
         Route::get('year-expense', [YearExpenseController::class, 'yearExpense'])->name('year-expense');
         // Expense Data--------
         Route::resource('expense', ExpenseController::class);
+        // Pos Route
+        Route::resource('pos', PosController::class);
+        // Add to cart
+        Route::post('cart', [AddToCartController::class, 'addToCart'])->name('addToCart');
+        Route::get('show-cart-items', [AddToCartController::class, 'showCart'])->name('showCart');
+        Route::post('/update-cart', [AddToCartController::class, 'updateCart'])->name('update.cart');
+        Route::post('/delete-cart', [AddToCartController::class, 'deleteCart'])->name('delete.cart');
     });
 });
