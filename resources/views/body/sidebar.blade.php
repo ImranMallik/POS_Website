@@ -197,6 +197,30 @@
                         </ul>
                     </div>
                 </li>
+                <li>
+                    <a href="#order" data-bs-toggle="collapse">
+                        <i class="mdi mdi-cart-outline"></i> <!-- Icon for Order -->
+                        <span>Order</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="order">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('admin.orderPending') }}">
+                                    <i class="mdi mdi-clock-outline"></i>
+                                    Pending Order
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.product.create') }}">
+                                    <i class="mdi mdi-check-circle-outline"></i>
+                                    Complete Orders
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
 
 
 

@@ -10,6 +10,7 @@ use App\Http\Controllers\Backend\EmployeeController;
 use App\Http\Controllers\Backend\ExpenseController;
 use App\Http\Controllers\Backend\LastMonthSalaryController;
 use App\Http\Controllers\Backend\MonthExpenseController;
+use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\PaySalaryController;
 use App\Http\Controllers\Backend\PosController;
 use App\Http\Controllers\Backend\ProductController;
@@ -107,5 +108,12 @@ Route::middleware('auth')->group(function () {
         Route::get('show-cart-items', [AddToCartController::class, 'showCart'])->name('showCart');
         Route::post('/update-cart', [AddToCartController::class, 'updateCart'])->name('update.cart');
         Route::post('/delete-cart', [AddToCartController::class, 'deleteCart'])->name('delete.cart');
+        Route::post('/invoice-cart', [AddToCartController::class, 'invoice'])->name('invoice.cart');
+        Route::post('/final-invoice', [AddToCartController::class, 'finalInvoice'])->name('final.invoice');
+        // Order Route
+        Route::get('order-pending', [OrderController::class, 'orderPending'])->name('orderPending');
+        Route::get('order-details/{id}', [OrderController::class, 'orderDetails'])->name('orderDetails');
+        Route::post('order-customer-stored', [OrderController::class, 'order'])->name('orderCustomerStored');
+        Route::put('order-change-status', [OrderController::class, 'changeStatus'])->name('order-change-status');
     });
 });

@@ -83,11 +83,12 @@
                             </div>
 
 
-                            <form class="mt-4">
+                            <form class="mt-4" method="post" action="{{ route('admin.invoice.cart') }}">
+                                @csrf
                                 <div class="form-group mb-3">
                                     <label for="example-select" class="form-label">All Customer</label>
                                     <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <select name="supplier_id" class="form-select" id="example-select">
+                                        <select name="Coustomer_name" class="form-select" id="example-select">
                                             <option selected disabled>Select Customer</option>
                                             @foreach ($coustomer as $cus)
                                                 <option value="{{ $cus->id }}">{{ $cus->name }}</option>
