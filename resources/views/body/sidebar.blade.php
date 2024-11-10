@@ -152,7 +152,7 @@
                 </li>
                 <li>
                     <a href="#category" data-bs-toggle="collapse">
-                        <i class="mdi mdi-tag-multiple"></i>
+                        <i class="mdi mdi-folder-outline"></i> <!-- Updated icon class here -->
                         <span>Category</span>
                         <span class="menu-arrow"></span>
                     </a>
@@ -167,6 +167,7 @@
                         </ul>
                     </div>
                 </li>
+
                 <li>
                     <a href="#productMenu" data-bs-toggle="collapse">
                         <i class="mdi mdi-tag-multiple"></i> <!-- Icon for Product -->
@@ -177,13 +178,13 @@
                         <ul class="nav-second-level">
                             <li>
                                 <a href="{{ route('admin.product.index') }}">
-                                    <i class="mdi mdi-format-list-bulleted"></i> <!-- Icon for All Product -->
+                                    <i class="mdi mdi-format-list-bulleted"></i>
                                     All Product
                                 </a>
                             </li>
                             <li>
                                 <a href="{{ route('admin.product.create') }}">
-                                    <i class="mdi mdi-plus-box"></i> <!-- Icon for Add Product -->
+                                    <i class="mdi mdi-plus-box"></i>
                                     Add Product
                                 </a>
                             </li>
@@ -199,7 +200,7 @@
                 </li>
                 <li>
                     <a href="#order" data-bs-toggle="collapse">
-                        <i class="mdi mdi-cart-outline"></i> <!-- Icon for Order -->
+                        <i class="mdi mdi-cart-outline"></i>
                         <span>Order</span>
                         <span class="menu-arrow"></span>
                     </a>
@@ -212,7 +213,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('admin.product.create') }}">
+                                <a href="{{ route('admin.orderComplete') }}">
                                     <i class="mdi mdi-check-circle-outline"></i>
                                     Complete Orders
                                 </a>
@@ -220,6 +221,55 @@
                         </ul>
                     </div>
                 </li>
+                <li>
+                    <a href="#stock" data-bs-toggle="collapse">
+                        <i class="mdi mdi-warehouse"></i>
+                        <span>Stock Manage</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="stock">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('admin.stock-index') }}">
+                                    <i class="mdi mdi-clock-outline"></i>
+                                    Stock
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <a href="#roleandpermisssion" data-bs-toggle="collapse">
+                        <i class="mdi mdi-shield-account-outline"></i>
+                        <span>Roles And Permission</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="roleandpermisssion">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('admin.all-permission') }}">
+                                    <i class="mdi mdi-shield-key-outline"></i>
+                                    All Permissions
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.all-role') }}">
+                                    <i class="mdi mdi-lock"></i>
+                                    All Role
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.add-permission-to-role') }}">
+                                    <i class="mdi mdi-account-key"></i>
+                                    Role in Permission
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </li>
+
+
 
 
 

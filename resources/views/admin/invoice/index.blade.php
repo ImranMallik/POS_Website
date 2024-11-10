@@ -162,7 +162,6 @@
 
     </div> <!-- content -->
 
-    //Modal -->
     <div id="signup-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -195,20 +194,22 @@
 
                         <div class="mb-3">
                             <label for="username" class="form-label">Pay Now</label>
-                            <input class="form-control" type="text" name="pay" placeholder="Pay Now">
+                            <input class="form-control" type="text" id="pay" name="pay"
+                                placeholder="Pay Now">
                         </div>
 
 
                         <div class="mb-3">
                             <label for="username" class="form-label">Due Amount</label>
-                            <input class="form-control" type="text" name="due" placeholder="Due Amount ">
+                            <input class="form-control" type="text" id="due" name="due"
+                                placeholder="Due Amount ">
                         </div>
 
                         <input type="hidden" name="customer_id" value="{{ $customer->id }}">
                         <input type="hidden" name="order_date" value="{{ date('d-F-Y') }}">
                         <input type="hidden" name="order_status" value="pending">
                         <input type="hidden" name="total_products" value="{{ Cart::count() }}">
-                        <input type="hidden" name="total" value="{{ Cart::subtotal() }}">
+                        <input type="hidden" name="total" id="totalAmount" value="{{ Cart::subtotal() }}">
                         {{-- <input type="hidden" name="vat" value="{{ Cart::tax() }}"> --}}
                         {{-- <input type="hidden" name="total" value="{{ Cart::total() }}"> --}}
 
@@ -220,7 +221,28 @@
                     </form>
 
                 </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+            </div>
+        </div>
+    </div>
 @endsection
+
+@push('scripts')
+    <script>
+        document.getElementById('pay').addEventListener('input', function() {
+
+            let totalAmount = parseFloat(document.getElementById('totalAmount').value.replace(',', ''));
+
+            let payNow = parseFloat(document.getElementById('pay').value.replace(',', ''));
+
+            if (payNow > totalAmount) {
+                alert("Pay Now cannot be greater than the Total Amount.");
+                document.getElementById('pay').value = '';
+                document.getElementById('due').value = '';
+            } else {
+                let dueAmount = totalAmount - payNow;
+                document.getElementById('due').value = dueAmount.toFixed(2);
+            }
+
+        });
+    </script>
+@endpush

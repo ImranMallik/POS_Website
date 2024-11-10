@@ -48,8 +48,15 @@ class AddToCartController extends Controller
         $cartItem = Cart::get($rowId);
         $subtotal = $cartItem->price * $cartItem->qty;
 
+        $totalQuantity = \Cart::count();
+        $totalPrice = \Cart::subtotal();
+
         // Return the updated subtotal as JSON
-        return response()->json(['subtotal' => $subtotal]);
+        return response()->json([
+            'subtotal' => $subtotal,
+            'totalQuantity' => $totalQuantity,
+            'totalPrice' => $totalPrice
+        ]);
     }
     // Delete 
     // In your controller
@@ -98,6 +105,7 @@ class AddToCartController extends Controller
         $data['created_at'] = Carbon::now();
         $order_id = Order::insertGetId($data);
         $contains = Cart::content();
+        // dd($contains);
         $pdata = array();
 
         foreach ($contains as $item) {
@@ -105,7 +113,8 @@ class AddToCartController extends Controller
             $pdata['product_id'] = $item->id;
             $pdata['quantity'] = $item->qty;
             $pdata['unitcost'] = $item->price;
-            $pdata['total'] = $item->total;
+            $pdata['total'] = $item->price * $item->qty;
+            $pdata['created_at'] = Carbon::now();
 
             $insertData = Orderdetails::insert($pdata);
         }

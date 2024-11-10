@@ -104,7 +104,8 @@
                                     </div>
                                 </div>
                                 <div class="text-end">
-                                    <button type="submit" class="btn btn-success waves-effect waves-light mt-2"><i
+                                    <button type="submit"
+                                        class="btn btn-success waves-effect waves-light mt-2 complete-order"><i
                                             class="mdi mdi-content-save"></i> Complete Order </button>
                                 </div>
                             </form>
@@ -137,7 +138,7 @@
                                                     <td>{{ $item->quantity }}</td>
                                                     <td>₹{{ number_format($item->Product->selling_price, 2) }}</td>
                                                     <td>₹{{ number_format($item->total, 2) }}
-                                                    </td> <!-- Assuming total is calculated here -->
+                                                    </td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
@@ -154,3 +155,37 @@
 
     </div>
 @endsection
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            $('.complete-order').on('click', function(event) {
+                event.preventDefault();
+
+                let orderId = {{ $details->id }};
+                // alert(orderId);
+                $.ajax({
+                    url: "{{ route('admin.updateOrderQuantity') }}",
+                    type: "POST",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        order_id: orderId,
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            alert("Order completed and product store updated successfully!");
+                            location
+                                .reload(); // Optional: Reload to reflect changes if necessary
+                        } else {
+                            alert("An error occurred. Please try again.");
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(xhr.responseText);
+                        alert("Error: " + error);
+                    }
+                });
+            });
+
+        });
+    </script>
+@endpush

@@ -39,7 +39,6 @@
                                     </thead>
                                     @php
                                         $allCart = Cart::content();
-                                        // @dd($allCart);
                                     @endphp
                                     <tbody>
                                         @foreach ($allCart as $cartItem)
@@ -121,7 +120,6 @@
 
                 </div> <!-- end col -->
             </div>
-            <!-- end row-->
 
 
         </div>
@@ -221,13 +219,24 @@
                     } else {
                         console.error('Row not found with data-id:', rowId);
                     }
+
+                    if (response.totalPrice !== undefined && response.totalQuantity !== undefined) {
+                        var cleanTotalPrice = parseFloat(response.totalPrice.replace(/,/g, ''));
+                        document.querySelector('.subtotal-display').textContent = '₹ ' + cleanTotalPrice
+                            .toFixed(2);
+                        document.querySelector('.quantity-display').textContent = response.totalQuantity;
+                    } else {
+                        console.error('Response is missing totalPrice or totalQuantity');
+                    }
+
+
                 },
                 error: function(xhr) {
                     console.error('Error updating subtotal:', xhr.responseText);
                 }
             });
         }
-        // 
+
         function confirmDelete(button) {
             // Get the rowId from the data attribute
             var rowId = button.getAttribute('data-row-id');
@@ -243,7 +252,7 @@
 
         function deleteCartItem(rowId) {
             $.ajax({
-                url: "{{ route('admin.delete.cart') }}", // Update with your delete route
+                url: "{{ route('admin.delete.cart') }}",
                 method: 'POST',
                 data: {
                     rowId: rowId,

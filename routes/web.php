@@ -14,6 +14,8 @@ use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\PaySalaryController;
 use App\Http\Controllers\Backend\PosController;
 use App\Http\Controllers\Backend\ProductController;
+use App\Http\Controllers\Backend\RoleController;
+use App\Http\Controllers\Backend\StockController;
 use App\Http\Controllers\Backend\SupplierController;
 use App\Http\Controllers\Backend\YearExpenseController;
 use App\Http\Controllers\ProfileController;
@@ -30,8 +32,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
 
 require __DIR__ . '/auth.php';
@@ -115,5 +120,30 @@ Route::middleware('auth')->group(function () {
         Route::get('order-details/{id}', [OrderController::class, 'orderDetails'])->name('orderDetails');
         Route::post('order-customer-stored', [OrderController::class, 'order'])->name('orderCustomerStored');
         Route::put('order-change-status', [OrderController::class, 'changeStatus'])->name('order-change-status');
+        Route::get('order-complete', [OrderController::class, 'orderComplete'])->name('orderComplete');
+        // Stock
+        Route::get('stock-manage', [StockController::class, 'index'])->name('stock-index');
+        Route::post('/admin/update-order-quantity', [StockController::class, 'updateOrderQuantity'])->name('updateOrderQuantity');
+        // download invoice
+        Route::get('invoice-download/{id}', [OrderController::class, 'downloadInvoice'])->name('invoice-download');
+
+        // Permission Routes
+        Route::controller(RoleController::class)->group(function () {
+            Route::get('all-permission', 'index')->name('all-permission');
+            Route::get('add-permission', 'addPermission')->name('add-permission');
+            Route::post('store-permission', 'storePermission')->name('store-permission');
+            Route::get('edit-permission/{id}', 'editPermission')->name('edit-permission');
+            Route::put('update-permission/{id}', 'updatePermission')->name('update-permission');
+            Route::delete('delete-permission/{id}', 'deletePermission')->name('delete-permission');
+            // Route for role 
+            Route::get('all-role', 'allRole')->name('all-role');
+            Route::get('add-role', 'addRole')->name('add-role');
+            Route::post('store-role', 'storeRole')->name('storeRole');
+            Route::get('edit-role/{id}', 'editRole')->name('edit-role');
+            Route::put('update-role/{id}', 'updateRole')->name('update-role');
+            Route::delete('delete-role/{id}', 'deleteRole')->name('delete-role');
+            // Add Role For Permission
+            Route::get('add-permission-to-role', 'addPermissionToRole')->name('add-permission-to-role');
+        });
     });
 });

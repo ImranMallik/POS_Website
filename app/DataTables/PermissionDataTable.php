@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\Product;
+use App\Models\Permission;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -12,7 +12,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class ProductDataTable extends DataTable
+class PermissionDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -23,33 +23,20 @@ class ProductDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', function ($query) {
-                $editBtn = "<a href='" . route('admin.product.edit', $query->id) . "' class='btn btn-primary mx-2'><i class='far fa-edit'></i></a>";
-                $deleteBtn = "<a href='" . route('admin.product.destroy', $query->id) . "' class='btn btn-danger ml-2 delet-item'><i class='fas fa-trash-alt'></i></a>";
-                $barcodeBtn = "<a href='" . route('admin.product-bar-code', $query->id) . "' class='btn btn-secondary mx-2'><i class='fas fa-barcode'></i></a>";
+                $editBtn = "<a href='" . route('admin.edit-permission', $query->id) . "' class='btn btn-primary mx-2'><i class='far fa-edit'></i></a>";
+                $deleteBtn = "<a href='" . route('admin.delete-permission', $query->id) . "' class='btn btn-danger ml-2 delet-item'><i class='fas fa-trash-alt'></i></a>";
 
-                return $editBtn . $deleteBtn . $barcodeBtn;
+                return $editBtn . $deleteBtn;
             })
 
-            ->addColumn('image', function ($query) {
-                return $img = "<img width = '50px' src='" . asset($query->product_image) . "'></img>";
-            })
-            ->addColumn('category', function ($query) {
-                return $query->category->category_name;
-            })
-            ->addColumn('supplier', function ($query) {
-                return $query->supplier->name;
-            })
-            ->addColumn('price', function ($query) {
-                return '₹' . $query->selling_price;
-            })
-            ->rawColumns(['action', 'image', 'price', 'category', 'supplier'])
+            ->rawColumns(['action'])
             ->setRowId('id');
     }
 
     /**
      * Get the query source of dataTable.
      */
-    public function query(Product $model): QueryBuilder
+    public function query(Permission $model): QueryBuilder
     {
         return $model->newQuery();
     }
@@ -60,10 +47,10 @@ class ProductDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-            ->setTableId('product-table')
+            ->setTableId('permission-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
-            //->dom('Bfrtip')
+            // ->dom('Bfrtip')
             ->orderBy(0)
             ->selectStyleSingle()
             ->buttons([
@@ -84,16 +71,17 @@ class ProductDataTable extends DataTable
         return [
 
             Column::make('id'),
-            Column::make('image'),
-            Column::make('product_name'),
-            Column::make('category'),
-            Column::make('supplier'),
-            Column::make('product_code'),
-            Column::make('price'),
+            Column::make('name'),
+            Column::computed('group_name')
+                ->title('Group Name')
+                ->exportable(true)
+                ->printable(true)
+                ->addClass('text-center'),
+
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
-                ->width(250)
+                ->width(200)
                 ->addClass('text-center'),
         ];
     }
@@ -103,6 +91,6 @@ class ProductDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Product_' . date('YmdHis');
+        return 'Permission_' . date('YmdHis');
     }
 }

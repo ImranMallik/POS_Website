@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\Product;
+use App\Models\StockDatatTable;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -12,7 +13,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class ProductDataTable extends DataTable
+class StockDatatTableDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -22,12 +23,14 @@ class ProductDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', function ($query) {
-                $editBtn = "<a href='" . route('admin.product.edit', $query->id) . "' class='btn btn-primary mx-2'><i class='far fa-edit'></i></a>";
-                $deleteBtn = "<a href='" . route('admin.product.destroy', $query->id) . "' class='btn btn-danger ml-2 delet-item'><i class='fas fa-trash-alt'></i></a>";
-                $barcodeBtn = "<a href='" . route('admin.product-bar-code', $query->id) . "' class='btn btn-secondary mx-2'><i class='fas fa-barcode'></i></a>";
-
-                return $editBtn . $deleteBtn . $barcodeBtn;
+            ->addColumn('product_store', function ($query) {
+                if ($query->product_store > 20) {
+                    return '<span class="badge bg-success" style="padding: 5px 10px;">' . $query->product_store . '</span>';
+                } elseif ($query->product_store > 0 && $query->product_store <= 20) {
+                    return '<span class="badge bg-warning" style="padding: 5px 10px;">' . $query->product_store . '</span>';
+                } else {
+                    return '<span class="badge bg-danger" style="padding: 5px 10px;">Out of Stock</span>';
+                }
             })
 
             ->addColumn('image', function ($query) {
@@ -42,7 +45,7 @@ class ProductDataTable extends DataTable
             ->addColumn('price', function ($query) {
                 return '₹' . $query->selling_price;
             })
-            ->rawColumns(['action', 'image', 'price', 'category', 'supplier'])
+            ->rawColumns(['product_store', 'image', 'price', 'category', 'supplier'])
             ->setRowId('id');
     }
 
@@ -60,7 +63,7 @@ class ProductDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-            ->setTableId('product-table')
+            ->setTableId('stockdatattable-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
             //->dom('Bfrtip')
@@ -90,11 +93,13 @@ class ProductDataTable extends DataTable
             Column::make('supplier'),
             Column::make('product_code'),
             Column::make('price'),
-            Column::computed('action')
-                ->exportable(false)
-                ->printable(false)
-                ->width(250)
-                ->addClass('text-center'),
+            Column::computed('product_store')
+                ->title('Stock Status')
+                ->exportable(true)
+                ->printable(true)
+                ->width(200)
+                ->addClass('text-center')
+
         ];
     }
 
@@ -103,6 +108,6 @@ class ProductDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Product_' . date('YmdHis');
+        return 'StockDatatTable_' . date('YmdHis');
     }
 }
