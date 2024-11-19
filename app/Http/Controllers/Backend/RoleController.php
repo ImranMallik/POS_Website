@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use DB;
 
 class RoleController extends Controller
 {
@@ -138,5 +139,71 @@ class RoleController extends Controller
         $roles = Role::all();
         $permission_groups = User::getpermissionGroups();
         return view('admin.pages.roles.permission_to_role', compact('permissions', 'roles', 'permission_groups'));
+    }
+
+    // Add role for permissions
+
+    public function storePermissionToRole(Request $request)
+    {
+        $data = array();
+        $permissions = $request->permission;
+
+        foreach ($permissions as $key => $item) {
+            $data['permission_id'] = $item;
+            $data['role_id'] = $request->role_id;
+
+            DB::table('role_has_permissions')->insert($data);
+        }
+
+        return redirect()->route('admin.add-permission-to-role')->with('success', 'Role Permission assigned successfully.');
+    }
+
+
+    public function allPermissionForRole()
+    {
+        $roles = Role::all();
+        return view('admin.pages.roles.all_roles_permission', compact('roles'));
+    }
+
+    public function editAllPermissionForRole($id)
+    {
+        $role = Role::find($id);
+        $permissions = Permission::all();
+        $permission_groups = User::getPermissionGroups();
+
+        return view('admin.pages.roles.edit_roles_permission', compact('role', 'permissions', 'permission_groups'));
+    }
+
+
+    public function updateAllPermissionForRole(Request $request, $id)
+    {
+        // dd($request->all());
+        $role = Role::find($id);
+        $permissions = $request->permission;
+        if (!empty($permissions)) {
+            $permissions = Permission::whereIn('id', $permissions)->pluck('name')->toArray();
+            $role->syncPermissions($permissions);
+        }
+
+        return redirect()->route('admin.all-permission-for-role')->with('success', 'Role Permission updated successfully.');
+    }
+
+    public function deletePermissionForRole($id)
+    {
+        $role = Role::findOrFail($id);
+
+        if (!is_null($role)) {
+            $role->delete();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Role Permission Deleted Successfully',
+            ]);
+        }
+
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Role not found.',
+        ]);
     }
 }

@@ -238,6 +238,8 @@
                         </ul>
                     </div>
                 </li>
+
+
                 <li>
                     <a href="#roleandpermisssion" data-bs-toggle="collapse">
                         <i class="mdi mdi-shield-account-outline"></i>
@@ -264,14 +266,35 @@
                                     Role in Permission
                                 </a>
                             </li>
+                            <li>
+                                <a href="{{ route('admin.all-permission-for-role') }}">
+                                    <i class="mdi mdi-lock"></i>
+                                    All Role in Permission
+                                </a>
+                            </li>
+
 
                         </ul>
                     </div>
                 </li>
 
-
-
-
+                <li>
+                    <a href="#admin" data-bs-toggle="collapse">
+                        <i class="mdi mdi-account-group-outline"></i> <!-- Changed icon -->
+                        <span>Setting Admin User</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="admin">
+                        <ul class="nav-second-level">
+                            <li>
+                                <a href="{{ route('admin.admin-setting.index') }}">
+                                    <i class="mdi mdi-lock-outline"></i>
+                                    All Admin
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
 
 
 

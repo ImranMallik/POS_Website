@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Backend\AddToCartController;
+use App\Http\Controllers\Backend\AdminSettingController;
 use App\Http\Controllers\Backend\AdvanceSalaryController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\CoustomerController;
@@ -19,6 +20,7 @@ use App\Http\Controllers\Backend\StockController;
 use App\Http\Controllers\Backend\SupplierController;
 use App\Http\Controllers\Backend\YearExpenseController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Role;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -144,6 +146,18 @@ Route::middleware('auth')->group(function () {
             Route::delete('delete-role/{id}', 'deleteRole')->name('delete-role');
             // Add Role For Permission
             Route::get('add-permission-to-role', 'addPermissionToRole')->name('add-permission-to-role');
+            Route::post('store-permission-to-role', 'storePermissionToRole')->name('store-permission-to-role');
+            // All permission for role
+            Route::get('all-permission-for-role', 'allPermissionForRole')->name('all-permission-for-role');
+            Route::get('all-permission-for-role/{id}', 'editAllPermissionForRole')->name('edit.all-permission-for-role');
+            Route::post('update-permission-for-role/{id}', 'updateAllPermissionForRole')->name('update.all-permission-for-role');
+            Route::delete('delete-permission-for-role/{id}', 'deletePermissionForRole')->name('delete.all-permission-for-role');
+        });
+
+        // Admin Setting Route
+        Route::controller(AdminSettingController::class)->group(function () {
+            Route::get('admin-setting', 'index')->name('admin-setting.index');
+            // Route::patch('admin-setting', 'update')->name('admin-setting.update');
         });
     });
 });

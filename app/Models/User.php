@@ -59,4 +59,16 @@ class User extends Authenticatable
             ->where('group_name', $group_name)->get();
         return $permissions;
     }
+
+    public static function roleHasPermissions($role, $permissions)
+    {
+        $haspermission  = true;
+        foreach ($permissions as $permission) {
+            if (! $role->hasPermissionTo($permission->name)) {
+                $haspermission = false;
+                return $haspermission;
+            }
+            return $haspermission;
+        }
+    }
 }
