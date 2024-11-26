@@ -157,7 +157,11 @@ Route::middleware('auth')->group(function () {
         // Admin Setting Route
         Route::controller(AdminSettingController::class)->group(function () {
             Route::get('admin-setting', 'index')->name('admin-setting.index');
-            // Route::patch('admin-setting', 'update')->name('admin-setting.update');
+            Route::get('add-admin-setting', 'addAdmin')->name('admin-setting.add');
+            Route::post('store-admin-setting', 'storeAdmin')->name('admin-setting.store');
+            Route::get('edit-admin-setting/{id}', 'editAdmin')->name('admin-setting.edit');
+            Route::put('update-admin-setting/{id}', 'updateAdmin')->name('admin-setting.update');
+            Route::delete('delete-admin-setting/{id}', 'deleteAdmin')->name('admin-setting.delete');
         });
     });
 });

@@ -78,7 +78,7 @@ class AddToCartController extends Controller
     public function invoice(Request $request)
     {
 
-        // dd($request->all());
+
         $request->validate([
             'Coustomer_name' => 'required|integer',
         ]);

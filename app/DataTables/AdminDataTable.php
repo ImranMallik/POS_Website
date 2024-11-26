@@ -24,16 +24,23 @@ class AdminDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', function ($query) {
-                $editBtn = "<a href='" . route('admin.employees.edit', $query->id) . "' class='btn btn-primary mx-2'><i class='far fa-edit'></i></a>";
-                $deleteBtn = "<a href='" . route('admin.employees.destroy', $query->id) . "' class='btn btn-danger ml-2 delet-item'><i class='fas fa-trash-alt'></i></a>";
+                $editBtn = "<a href='" . route('admin.admin-setting.edit', $query->id) . "' class='btn btn-primary mx-2'><i class='far fa-edit'></i></a>";
+                $deleteBtn = "<a href='" . route('admin.admin-setting.delete', $query->id) . "' class='btn btn-danger ml-2 delet-item'><i class='fas fa-trash-alt'></i></a>";
 
                 return $editBtn . $deleteBtn;
             })
             ->addColumn('image', function ($query) {
                 return $img = "<img width = '50px' src='" . asset($query->photo) . "'></img>";
             })
+            ->addColumn('role', function ($query) {
+                $roles = $query->roles->pluck('name');
+
+                return $roles->map(function ($role) {
+                    return "<span class='badge badge-primary'>{$role}</span>";
+                })->implode(' ');
+            })
             // ->rawColumn('action', 'image')
-            ->rawColumns(['image', 'action'])
+            ->rawColumns(['image', 'action', 'role'])
             ->setRowId('id');
     }
 
@@ -42,7 +49,7 @@ class AdminDataTable extends DataTable
      */
     public function query(User $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->newQuery()->with('roles');
     }
 
     /**
@@ -77,6 +84,7 @@ class AdminDataTable extends DataTable
             Column::make('id'),
             Column::make('image'),
             Column::make('name'),
+            Column::make('role')->title('Roles'),
             Column::make('email'),
             Column::make('phone'),
             Column::computed('action')

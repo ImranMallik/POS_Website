@@ -7,8 +7,8 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h3>Admin Setting</h3>
-                        <a href="{{ route('admin.employees.create') }}"
-                            class="btn btn-primary rounded-pill waves-effect waves-light">Add Employee </a>
+                        <a href="{{ route('admin.admin-setting.add') }}"
+                            class="btn btn-primary rounded-pill waves-effect waves-light">Add Admin </a>
                     </div>
                     <div class="card-body">
                         {{ $dataTable->table() }}
